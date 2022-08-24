@@ -8,8 +8,7 @@ import * as dotenv from 'dotenv'
     auth: process.env.GITHUB_AUTH
   })
 
-  const res = await octokit.request('GET /user/repos', {})
-  console.log(res)
-  console.log(process.env.GITHUB_AUTH)
+  const { data } = await octokit.request('GET /search/repositories?q=language:javascript&sort=stars&order=desc', {})
+  console.log(data)
 
 }());
