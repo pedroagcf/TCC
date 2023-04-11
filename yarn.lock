@@ -386,6 +386,13 @@ jws@^3.2.2:
     jwa "^1.4.1"
     safe-buffer "^5.0.1"
 
+lda@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/lda/-/lda-0.2.0.tgz#04dc4e2022d71e5e4d1788a548f1aad9db241e75"
+  integrity sha512-JbMEmnxmVX4lKVGl/WKjLVh+RhdyED5PjguGj/J0fU3TFCmaLYVVSlJGyhAMvrfSfZIhUCEpJWLXaRAqDPS/ww==
+  dependencies:
+    stem-porter "*"
+
 lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
@@ -442,6 +449,11 @@ semver@^7.3.8:
   integrity sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==
   dependencies:
     lru-cache "^6.0.0"
+
+stem-porter@*:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/stem-porter/-/stem-porter-0.0.1.tgz#591a8b0d696c34252af593535228430a34de7001"
+  integrity sha512-xJuy127YOwO4Cv5GPNkFebK9cpgCv2pDeUEVCIXngWjIgQmeH9cjDyk0QV+8coP4SJ6MCQPgUMYXMEQDYflLbw==
 
 stream-transform@^3.2.2:
   version "3.2.2"
