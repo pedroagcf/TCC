@@ -1,6 +1,5 @@
-const lda = require('lda');
 const { getCSV } = require('./src/csv');
-const { getRepositories, getReadme } = require('./src/api');
+const { getRepositories, filterByDescription } = require('./src/api');
 const { saveJson } = require('./src/utils');
 
 let programmingLanguage = process.argv[process.argv.indexOf('-l') + 1];
@@ -16,35 +15,10 @@ Promise.allSettled(Array.from(Array(10)).map((_, i) => getRepositories(programmi
     return { name, language, html_url, created_at, size, stargazers_count, has_issues, score, forks, watchers, description, owner: owner.login }
   }).filter(el => el.language === "JavaScript")
 
-  const results = [];
-  for (let repo of repositories) {
-    let { description, owner, name } = repo
+  const validRepositories = filterByDescription(repositories)
 
-    if (!description) continue;
+  getCSV(validRepositories, programmingLanguage)
 
-    let readmeText = await getReadme(owner, name)
-    let descriptionDoc = description.match(/[^\.!\?]+[\.!\?]+/g)
-    let readmeTextDoc = readmeText.match(/[^\.!\?]+[\.!\?]+/g)
-
-    if (!readmeTextDoc) {
-      results.push(lda(descriptionDoc, 2, 5))
-    } else {
-      console.log("readmeTextDoc", readmeTextDoc)
-      // let document = descriptionDoc.concat(readmeTextDoc)
-      // results.push(lda(document, 2, 5))
-    }
-  }
-
-  // console.log(results[0])
-  // getCSV(repositories, programmingLanguage)
 })
 
-
-
-  // .sort((a, b) => b.size - a.size)
-
-// It outputted two topics,
-// where each topic is a composite of keywords and each keyword has a specific weighting for the
-// topic. Since only repositories that contained an application were accepted, projects that returned
-// plugin, module, extension, API, database, framework, library, etc
 

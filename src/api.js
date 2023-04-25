@@ -1,4 +1,5 @@
 require('dotenv/config');
+const lda = require('lda');
 const { Octokit } = require("@octokit/rest");
 const { decodeBase64 } = require('./utils');
 
@@ -31,7 +32,33 @@ async function getReadme(owner, repoName) {
   return readmeContent
 }
 
+function filterByDescription(repositories) {
+
+  const forbiddenKeys = ["plugin", "module", "extension", "API", "database", "framework", "library", "Library"]
+  const appRepository = repositories.filter(repo => {
+    let { description } = repo
+
+    if (!description) {
+      return false
+    }
+
+    let descriptionDoc = description.match(/[^\.!\?]+[\.!\?]+/g)
+    const keyTerms = lda(descriptionDoc, 2, 5).flat()
+
+    const invalidRepository = keyTerms.some(({ term }) => forbiddenKeys.includes(term))
+
+    if (invalidRepository) {
+      return false
+    } else {
+      return repo
+    }
+  })
+
+  return appRepository
+}
+
 module.exports = {
+  filterByDescription,
   getRepositories,
   getReadme
 }

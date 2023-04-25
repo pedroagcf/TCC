@@ -18,7 +18,6 @@ function decodeBase64(data, encoding = "utf-8") {
   return text;
 }
 
-
 module.exports = {
   saveJson,
   decodeBase64
